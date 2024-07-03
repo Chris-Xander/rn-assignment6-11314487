@@ -1,8 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, ScrollView, Pressable, FlatList, Image} from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import React, { useState } from 'react';
 
  export default function HomeScreen ({navigation}) {
+  
+  const [itemList, setItemList] = useState([]);
+  const [cart, setCart] = useState([]);
   const paw =[
     { index:1,
    image: require ('./assets/dress1.png'),
@@ -20,28 +24,29 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 
   const wap=[
     {
-    index:1,
+    index:3,
     image: require ('./assets/dress3.png'),
     dressName:'Church wear',
     dressType:'Reversible angorra cardigan',
     price:'$120'
      },
-     { index:2,
+     { index:4,
        image: require('./assets/dress4.png'),
        dressName:'Lamerei',
     dressType:'Reversible angorra cardigan',
     price:'$120'
         },
   ];
+
   const awp=[
     {
-    index:1,
+    index:5,
     image: require ('./assets/dress5.png'),
     dressName:'21WN',
     dressType:'Reversible angorra cardigan',
     price:'$120'
      },
-     { index:2,
+     { index:6,
        image: require('./assets/dress6.png'),
        dressName:'Lopo',
     dressType:'Reversible angorra cardigan',
@@ -50,28 +55,38 @@ import Ionicons from '@expo/vector-icons/Ionicons';
   ];
   const apw=[
     {
-    index:1,
+    index:7,
     image: require ('./assets/dress7.png'),
     dressName:'21WN',
     dressType:'Reversible angorra cardigan',
     price:'$120'
      },
-     { index:2,
+     { index:8,
        image: require('./assets/dress3.png'),
        dressName:'Lamerei',
     dressType:'Reversible angorra cardigan',
     price:'$120'
         },
   ];
+  const handleAddToCart = (item) => {
+    setCart([...cart, item]);
+  };
+
   return (
 
     <ScrollView style={styles.ScrollView}>
     <View style={styles.container}>
       <View style={styles.positioning}>
       <Image style={{top:25, left: -5}}source={require('./assets/Logo.png')}/>
-     <Pressable style={{right: 150}} onPress={() => navigation.navigate('Checkout')}><Ionicons name="menu-outline" size={40} color="black"/></Pressable>
+     <Pressable style={{right: 150}} ><Ionicons name="menu-outline" size={40} color="black"/></Pressable>
      <Pressable style={{left: 110, top: -35}}><Ionicons name="search-outline" size={30} color="black"/></Pressable>
-     <Pressable style={{left: 150, top: -67}}><Ionicons name="bag-outline" size={30} color="black"/></Pressable>
+     <Pressable style={{left: 150, top: -67}} onPress={() => navigation.navigate('Checkout', { cart })}>  
+      <View>
+      <Text style={{ position: 'absolute', top: -8, right: -8, backgroundColor: 'red', color: 'white', borderRadius: 10, paddingHorizontal: 6, fontSize: 12 }}>
+        {cart.length}
+      </Text>
+    <Ionicons name="bag-outline" size={30} color="black" />
+  </View></Pressable>
      <Text style={{fontSize: 40,right:100, top: -20}}> Our Story</Text>
      <Pressable style={styles.filter}><Ionicons name="filter-outline" size={25} color="orange"/></Pressable>
      <Pressable style={styles.list}><Ionicons name="list-outline" size={25} color="black"/></Pressable>
@@ -81,7 +96,9 @@ import Ionicons from '@expo/vector-icons/Ionicons';
       horizontal={true}
       data={paw}
       renderItem={({item})=>(<View style={styles.conco}><Image source={item.image} style={styles.dresses} />
-     <Pressable style={{top:-30, left: 150}}><Ionicons name="add-circle-outline" size={25} color="black"/></Pressable>
+     <Pressable style={{top:-30, left: 150}}   onPress={() => {
+      handleAddToCart(item)
+        }}><Ionicons name="add-circle-outline" size={25} color="black"/></Pressable>
       <Text style={styles.flatlistcontainer}>{item.dressName}</Text>
       <Text style={styles.flatlistdescription}>{item.dressType}</Text>
       <Text style={styles.flatlistprice}>{item.price}</Text>
@@ -91,7 +108,9 @@ import Ionicons from '@expo/vector-icons/Ionicons';
       horizontal={true}
       data={wap}
       renderItem={({item})=>(<View style={styles.conco}><Image source={item.image} style={styles.dresses} />
-      <Pressable style={{top:-30, left: 150}}><Ionicons name="add-circle-outline" size={25} color="black"/></Pressable>
+      <Pressable style={{top:-30, left: 150}}   onPress={() => {
+        handleAddToCart(item)
+        }}><Ionicons name="add-circle-outline" size={25} color="black"/></Pressable>
       <Text style={styles.flatlistcontainer}>{item.dressName}</Text>
       <Text style={styles.flatlistdescription}>{item.dressType}</Text>
       <Text style={styles.flatlistprice}>{item.price}</Text>
@@ -101,7 +120,9 @@ import Ionicons from '@expo/vector-icons/Ionicons';
       horizontal={true}
       data={awp}
       renderItem={({item})=>(<View style={styles.conco}><Image source={item.image} style={styles.dresses} />
-      <Pressable style={{top:-30, left: 150}}><Ionicons name="add-circle-outline" size={25} color="black"/></Pressable>
+      <Pressable style={{top:-30, left: 150}}   onPress={() => {
+        handleAddToCart(item)
+        }}><Ionicons name="add-circle-outline" size={25} color="black"/></Pressable>
       <Text style={styles.flatlistcontainer}>{item.dressName}</Text>
       <Text style={styles.flatlistdescription}>{item.dressType}</Text>
       <Text style={styles.flatlistprice}>{item.price}</Text>
@@ -111,7 +132,9 @@ import Ionicons from '@expo/vector-icons/Ionicons';
       horizontal={true}
       data={apw}
       renderItem={({item})=>(<View style={styles.conco}><Image source={item.image} style={styles.dresses} />
-      <Pressable style={{top:-30, left: 150}}><Ionicons name="add-circle-outline" size={25} color="black"/></Pressable>
+      <Pressable style={{top:-30, left: 150}}   onPress={() => {
+        handleAddToCart(item)
+        }}><Ionicons name="add-circle-outline" size={25} color="black"/></Pressable>
       <Text style={styles.flatlistcontainer}>{item.dressName}</Text>
       <Text style={styles.flatlistdescription}>{item.dressType}</Text>
       <Text style={styles.flatlistprice}>{item.price}</Text>
